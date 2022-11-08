@@ -24,17 +24,11 @@ async function run(){
         app.get('/services', async(req, res)=>{
             const query = {};
             const cursor = servicesCollection.find(query);
-            const limits = await cursor.limit(3).toArray();
-            res.send(limits)
-        })
-        app.get('/servicesCart', async(req, res)=>{
-            const query = {};
-            const cursor = servicesCollection.find(query);
             const services = await cursor.toArray();
             res.send(services)
-        })
+        });
 
-        app.get('/servicesCart/:id', async(req, res)=>{
+        app.get('/services/:id', async(req, res)=>{
             const id = req.params.id;
             const  query = {_id : ObjectId(id)};
             const result = await servicesCollection.findOne(query);
