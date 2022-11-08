@@ -24,8 +24,14 @@ async function run(){
         app.get('/services', async(req, res)=>{
             const query = {};
             const cursor = servicesCollection.find(query);
-            const result = await cursor.limit(3).toArray();
-            res.send(result)
+            const limits = await cursor.limit(3).toArray();
+            res.send(limits)
+        })
+        app.get('/servicesCart', async(req, res)=>{
+            const query = {};
+            const cursor = servicesCollection.find(query);
+            const services = await cursor.toArray();
+            res.send(services)
         })
     }
     finally{
