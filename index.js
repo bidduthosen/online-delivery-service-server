@@ -39,10 +39,18 @@ async function run(){
 
         // review api
         app.get('/reviews', async(req, res)=>{
+            const email = req.query.email;
+            const title = req.query.title;
+            // console.log(title)
             let query = {};
-            if(req.query.email){
+            if(email){
                 query ={
-                    email: req.query.email,
+                    email: email
+                }
+            }
+            if(title){
+                query ={
+                    title: title,
                 }
             }
             const cursor = reviewCollection.find(query);
@@ -53,6 +61,14 @@ async function run(){
             const review = req.body;
             const result = await reviewCollection.insertOne(review);
             res.send(result)
+        });
+
+        app.delete('/reviews/:id', async(req, res)=>{
+            const id = req.params.id;
+            // console.log(id)
+            const query = {_id: ObjectId(id)};
+            const result = await reviewCollection.deleteOne(query);
+            res.send(result);
         })
     }
     finally{
